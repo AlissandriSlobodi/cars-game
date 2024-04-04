@@ -43,11 +43,18 @@ function isCollide(a, b) {
   aRect = a.getBoundingClientRect();
   bRect = b.getBoundingClientRect();
 
+  // Учитывайте размеры машин при проверке столкновения
+  let aWidth = aRect.width * 0.7; // Уменьшаем ширину машин для более реалистичной проверки
+  let bWidth = bRect.width * 0.7;
+
+  let aHeight = aRect.height * 0.7; // Уменьшаем высоту машин для более реалистичной проверки
+  let bHeight = bRect.height * 0.7;
+
   return !(
-    aRect.top > bRect.bottom ||
-    aRect.bottom < bRect.top ||
-    aRect.left > bRect.right ||
-    aRect.right < bRect.left
+    aRect.top > bRect.bottom - aHeight ||
+    aRect.bottom - aHeight < bRect.top ||
+    aRect.left > bRect.right - aWidth ||
+    aRect.right - aWidth < bRect.left
   );
 }
 
@@ -133,9 +140,8 @@ function start() {
     competitorcars.setAttribute("class", "competitor");
     competitorcars.y = (x + 1) * 350 * -1;
     competitorcars.y = x * 150;
-    competitorcars.style.backgroundImage =
-      "url('https://assets.codepen.io/7773162/F881911B-9977-4381-8A92-EA31A4AE09F6.png')";
-    competitorcars.style.width = 45 + "px";
+    competitorcars.style.backgroundImage = "url('./images/car.png')";
+    competitorcars.style.width = 85 + "px";
     competitorcars.style.left = Math.floor(Math.random() * 350) + "px";
     competitorcars.style.top = competitorcars.y + "px";
     gameArea.appendChild(competitorcars);
